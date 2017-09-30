@@ -11,6 +11,13 @@ In a class that John taught at Temple University, he would put a checkbox at the
 
 This game is essentially the same, I've simply done away with the pedagogy and kept only the cruelty. 
 
+How Can I Play?
+===============
+
+This game will be running at [cruelty.brandonfoltz.com](http://www.cruelty.brandonfoltz.com).
+
+You are also free to host this game yourself and make any modifications you like. 
+
 MIT License
 ===========
 
