@@ -1,0 +1,11 @@
+Pages Needed:
+	login [do later]
+	play game page
+		- checkbox + submit button [working]
+		- previous game stats [working]
+
+	play game logic
+		- cron job to do calculation and end game
+
+		- bot api for automated playing
+			- uses api key
