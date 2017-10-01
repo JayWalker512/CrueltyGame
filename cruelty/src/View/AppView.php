@@ -36,5 +36,8 @@ class AppView extends View
      */
     public function initialize()
     {
+        /*$this->loadHelper('Html', [
+            'className' => 'Bootstrap.Html'
+        ]);*/
     }
 }
