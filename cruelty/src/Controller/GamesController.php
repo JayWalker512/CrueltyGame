@@ -29,6 +29,7 @@ class GamesController extends AppController
     public function play()
     {
         $loggedUser = $this->Auth->user();
+
         $currentGame = $this->Games->find('all')->where([
             'complete' => false
         ])->first();
@@ -45,14 +46,19 @@ class GamesController extends AppController
         }
         $this->set('bCanPlay', $bCanPlay);
 
+
+        $pastGames = $this->Games->find('all')->order([
+            'id' => 'DESC'
+        ])->all();
+        $this->set('pastGames', $pastGames);
+
+
         if ($this->request->is('post')) {
             if (!empty($loggedUser) && !empty($currentGame)) {
-                $newPlay = $this->GamesUsers->newEntity();
-                $newPlay->user_id = $loggedUser['id'];
-                $newPlay->game_id = $currentGame->id;
-                $newPlay->checked_box = ($this->request->getData('checked_box') == "0" ? 0 : 1);
-                if ($this->GamesUsers->save($newPlay)) {
+
+                if ($this->GamesUsers->insertPlay($loggedUser['id'], ($this->request->getData('checked_box') == "0" ? 0 : 1))) {
                     $this->Flash->success('Successfully recorded your decision!');
+
                     $this->redirect([
                         'controller' => 'Games',
                         'action' => 'play'
@@ -66,6 +72,35 @@ class GamesController extends AppController
                 }
             }
         }
+    }
+
+    public function botPlay()
+    {
+        //api key definition
+        //128 characters long
+        //letters (U and l), and numbers. No whitespace.
+
+        $apiKey = $this->request->getQuery('api_key');
+        $apiKey = trim($apiKey);
+
+
+        if (preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches)) {
+            //return $this->redirect($this->referer());
+        } else {
+            $loggedUser = $this->Users->find('all')->where([
+                'api_key' => $apiKey
+            ])->first();
+
+            $checkedBox = $this->request->getQuery('c');
+
+            if ($checkedBox == '0') {
+
+            } else {
+
+            }
+        }
+
+
     }
 
     /**

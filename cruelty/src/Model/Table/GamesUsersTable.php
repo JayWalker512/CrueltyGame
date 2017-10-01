@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
 
 /**
  * GamesUsers Model
@@ -77,5 +78,40 @@ class GamesUsersTable extends Table
         $rules->add($rules->existsIn(['game_id'], 'Games'));
 
         return $rules;
+    }
+
+    public function insertPlay($userId, $checkedBox)
+    {
+        $gamesTable = TableRegistry::get('Games');
+
+        $currentGame = $gamesTable->find('all')->where([
+            'complete' => false
+        ])->first();
+
+        if (empty($currentGame)) {
+            return false;
+        }
+
+        $pastPlay = $this->find('all')->where([
+            'user_id' => $userId,
+            'game_id' => $currentGame->id
+        ])->first();
+
+        if (!empty($pastPlay)) {
+            return false;
+        }
+
+        $newPlay = $this->newEntity();
+        $newPlay->user_id = $userId;
+        $newPlay->game_id = $currentGame->id;
+        $newPlay->checked_box = $checkedBox;
+        if ($this->save($newPlay)) {
+
+            $currentGame->total_plays = $currentGame->total_plays + 1;
+            $gamesTable->save($currentGame);
+
+            return true;
+        }
+        return false;
     }
 }
