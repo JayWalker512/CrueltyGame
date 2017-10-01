@@ -50,29 +50,6 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
-
-        $this->loadComponent('Auth', [
-            'authorize' => 'Controller',
-            'authentication' => [
-                'Form' => [
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'password'
-                    ]
-                ]
-            ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'loginRedirect' => [
-                'controller' => 'Users',
-                'action' => 'add'
-            ],
-            'unauthorizedRedirect' => $this->referer()
-        ]);
-
-        $this->Auth->allow(['display']);
     }
 
     /**
@@ -92,6 +69,4 @@ class AppController extends Controller
             $this->set('_serialize', true);
         }
     }
-
-
 }
