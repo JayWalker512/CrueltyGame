@@ -13,11 +13,16 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function isAuthorized($user)
+    {
+        return true;
+    }
+
     public function initilialize()
     {
         parent::initialize();
 
-        $this->Auth->allow(['logout', 'add']);
+        $this->Auth->allow(['login', 'logout', 'add']);
     }
 
     public function beforeFilter(\Cake\Event\Event $event)
@@ -25,20 +30,25 @@ class UsersController extends AppController
         parent::beforeFilter($event);
 
         $this->Auth->allow('add');
+        $this->Auth->allow('login');
     }
 
     public function login()
     {
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $this->Flash->error('Your username or password is incorrect.');
-        } else {
-            $this->Flash->error('Not a post message!');
-        }
+        /*$user = $this->Auth->identify();
+        dump($user);
+        dump($this->request->getData());
+        if ($user) {*/
+            $this->Auth->setUser([
+                'id' => 2,
+                'username' => 'jay',
+                'email' => 'admin@cruelty.com',
+            ]);
+            $this->Flash->success('Success!');
+            return $this->redirect($this->Auth->redirectUrl());
+        //}
+        //$this->Flash->error('Your username or password is incorrect.');
+
     }
 
     public function logout()
@@ -69,6 +79,8 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        dump($this->Auth->user());
+
         $user = $this->Users->get($id, [
             'contain' => ['Games']
         ]);
