@@ -53,7 +53,7 @@ class AppController extends Controller
 
         $this->loadComponent('Auth', [
             'authorize' => 'Controller',
-            'authentication' => [
+            'authenticate' => [
                 'Form' => [
                     'fields' => [
                         'username' => 'email',
@@ -65,14 +65,14 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login'
             ],
-            /*'loginRedirect' => [
+            'loginRedirect' => [
                 'controller' => 'Users',
                 'action' => 'add'
-            ],*/
-            //'unauthorizedRedirect' => $this->referer()
+            ],
+            'unauthorizedRedirect' => $this->referer()
         ]);
 
-        $this->Auth->allow(['display']);
+        $this->Auth->allow(['display', 'login']);
     }
 
     /**

@@ -35,19 +35,13 @@ class UsersController extends AppController
 
     public function login()
     {
-        /*$user = $this->Auth->identify();
-        dump($user);
-        dump($this->request->getData());
-        if ($user) {*/
-            $this->Auth->setUser([
-                'id' => 2,
-                'username' => 'jay',
-                'email' => 'admin@cruelty.com',
-            ]);
+        $user = $this->Auth->identify();
+        if ($user) {
+            $this->Auth->setUser($user);
             $this->Flash->success('Success!');
             return $this->redirect($this->Auth->redirectUrl());
-        //}
-        //$this->Flash->error('Your username or password is incorrect.');
+        }
+        $this->Flash->error('Your username or password is incorrect.');
 
     }
 
