@@ -13,6 +13,61 @@ use App\Controller\AppController;
 class GamesController extends AppController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadModel('GamesUsers');
+        $this->loadModel('Users');
+    }
+
+    public function isAuthorized()
+    {
+        return true;
+    }
+
+    public function play()
+    {
+        $loggedUser = $this->Auth->user();
+        $currentGame = $this->Games->find('all')->where([
+            'complete' => false
+        ])->first();
+
+        $usersPlay = $this->GamesUsers->find('all')->where([
+            'user_id' => $loggedUser['id'],
+            'game_id' => $currentGame->id
+        ])->first();
+        $this->set('usersPlay', $usersPlay);
+
+        $bCanPlay = false;
+        if (empty($usersPlay)) {
+            $bCanPlay = true;
+        }
+        $this->set('bCanPlay', $bCanPlay);
+
+        if ($this->request->is('post')) {
+            if (!empty($loggedUser) && !empty($currentGame)) {
+                $newPlay = $this->GamesUsers->newEntity();
+                $newPlay->user_id = $loggedUser['id'];
+                $newPlay->game_id = $currentGame->id;
+                $newPlay->checked_box = ($this->request->getData('checked_box') == "0" ? 0 : 1);
+                if ($this->GamesUsers->save($newPlay)) {
+                    $this->Flash->success('Successfully recorded your decision!');
+                    $this->redirect([
+                        'controller' => 'Games',
+                        'action' => 'play'
+                    ]);
+                } else {
+                    $this->Flash->error('Failed to save your move!');
+                    $this->redirect([
+                        'controller' => 'Games',
+                        'action' => 'play'
+                    ]);
+                }
+            }
+        }
+    }
+
     /**
      * Index method
      *
