@@ -1,9 +1,19 @@
 Pages Needed:
-	login [do later]
+	login [working]
+
+	change password page
+
 	play game page
 		- checkbox + submit button [working]
 		- previous game stats [working]
 
+	api documentation
+		- how to use api & example
+		- show api key
+		- button to reset api key
+
+
+Code TODO:
 	play game logic
 		- cron job to do calculation and end game
 

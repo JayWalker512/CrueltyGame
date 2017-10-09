@@ -1,8 +1,4 @@
 <div>
-    <h2>How To Play</h2>
-    <p>If less than 50% of players check the box, those players who checked it win 10 points.</p>
-    <p>If more than 50% of players check the box, those players who checked the box lose 10 points!</p>
-
     <?php if (empty($loggedUser)): ?>
     <p>To play, <?= $this->Html->link('make an account', [
         'controller' => 'Users',
@@ -14,6 +10,12 @@
     <?php else: ?>
 
     <?php if ($bCanPlay == true): ?>
+    <h2>How To Play</h2>
+    <ul>
+        <li>If less than 50% of players check the box, those players who checked it win 10 points.</li>
+        <li>If more than 50% of players check the box, those players who checked the box lose 10 points!</li>
+    </ul>
+
     <?= $this->Form->create() ?>
     <?= $this->Form->input('checked_box', [
         'type' => 'checkbox',
@@ -22,7 +24,8 @@
     <?= $this->Form->button('Submit') ?>
     <?= $this->Form->end() ?>
     <?php else: ?>
-    <b><?= "You chose to " . ($usersPlay->checked_box ? "CHECK" : "NOT check") . " the box." ?></b>
+    <?= "You chose to <b>" . ($usersPlay->checked_box ? "CHECK" : "NOT check") . "</b> the box." ?>
+    <?= "Your current score is " . $loggedUser->score ?>
     <?php
     endif;
     endif;

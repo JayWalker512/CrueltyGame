@@ -29,11 +29,17 @@ class GamesController extends AppController
     public function play()
     {
         $loggedUser = $this->Auth->user();
+        if (!empty($loggedUser)) {
+            $loggedUser = $this->Users->get($loggedUser['id']);
+        }
         $this->set('loggedUser', $loggedUser);
 
         $currentGame = $this->Games->find('all')->where([
             'complete' => false
         ])->first();
+        if (empty($currentGame)) {
+            $currentGame = $this->Games->createNewGame();
+        }
 
         $usersPlay = $this->GamesUsers->find('all')->where([
             'user_id' => $loggedUser['id'],
@@ -104,6 +110,12 @@ class GamesController extends AppController
 
     }
 
+    public function runGame()
+    {
+        $this->Games->runGame();
+        $this->redirect(['action' => 'play']);
+    }
+
     /**
      * Index method
      *
@@ -134,71 +146,4 @@ class GamesController extends AppController
         $this->set('_serialize', ['game']);
     }
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $game = $this->Games->newEntity();
-        if ($this->request->is('post')) {
-            $game = $this->Games->patchEntity($game, $this->request->getData());
-            if ($this->Games->save($game)) {
-                $this->Flash->success(__('The game has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The game could not be saved. Please, try again.'));
-        }
-        $users = $this->Games->Users->find('list', ['limit' => 200]);
-        $this->set(compact('game', 'users'));
-        $this->set('_serialize', ['game']);
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Game id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $game = $this->Games->get($id, [
-            'contain' => ['Users']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $game = $this->Games->patchEntity($game, $this->request->getData());
-            if ($this->Games->save($game)) {
-                $this->Flash->success(__('The game has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The game could not be saved. Please, try again.'));
-        }
-        $users = $this->Games->Users->find('list', ['limit' => 200]);
-        $this->set(compact('game', 'users'));
-        $this->set('_serialize', ['game']);
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Game id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $game = $this->Games->get($id);
-        if ($this->Games->delete($game)) {
-            $this->Flash->success(__('The game has been deleted.'));
-        } else {
-            $this->Flash->error(__('The game could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
 }

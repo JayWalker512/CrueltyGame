@@ -5,6 +5,8 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\ORM\TableRegistry;
+use Cake\I18n\Time;
 
 /**
  * Games Model
@@ -80,5 +82,63 @@ class GamesTable extends Table
             ->allowEmpty('complete');
 
         return $validator;
+    }
+
+    public function runGame()
+    {
+        //get the current game
+        $currentGame = $this->find('all')->where([
+            'complete' => false
+        ])->first();
+
+        //get all the plays counts
+        $gamesUsersTable = TableRegistry::get('GamesUsers');
+        $currentGameCheckedCount = $gamesUsersTable->find();
+        $currentGameCheckedCount = $currentGameCheckedCount->select([
+            'count' => $currentGameCheckedCount->func()->count('*')
+        ])->where([
+            'game_id' => $currentGame->id,
+            'checked_box' => true
+        ])->first()->count;
+
+        $currentGameUncheckedCount = $gamesUsersTable->find();
+        $currentGameUncheckedCount = $currentGameUncheckedCount->select([
+            'count' => $currentGameUncheckedCount->func()->count('*')
+        ])->where([
+            'game_id' => $currentGame->id,
+            'checked_box' => false
+        ])->first()->count;
+
+        $totalPlays = $currentGameCheckedCount + $currentGameUncheckedCount;
+
+
+        //TODO FIXME If not enough players, extend the end time and bail;
+        if ($totalPlays < 10) {
+            return false;
+        }
+
+        //update current game fields
+        $currentGame->total_checked = $currentGameCheckedCount;
+        $currentGame->total_plays = $totalPlays;
+        $currentGame->ratio = round((float)$currentGameCheckedCount / (float)$totalPlays, 2);
+
+        //save game as 'complete'
+        $currentGame->complete = true;
+        $this->save($currentGame);
+
+        //create next incomplete game & save
+        $this->createNewGame();
+    }
+
+    public function createNewGame()
+    {
+        $newGame = $this->newEntity();
+        $newGame->complete = false;
+        $newGame->start_time = Time::now();
+        $newGame->end_time = new Time('now +24 hours');
+        $newGame->total_plays = 0;
+        $newGame->total_checked = 0;
+        $this->save($newGame);
+        return $newGame;
     }
 }
