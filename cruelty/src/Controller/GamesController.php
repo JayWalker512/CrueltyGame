@@ -29,6 +29,7 @@ class GamesController extends AppController
     public function play()
     {
         $loggedUser = $this->Auth->user();
+        $this->set('loggedUser', $loggedUser);
 
         $currentGame = $this->Games->find('all')->where([
             'complete' => false

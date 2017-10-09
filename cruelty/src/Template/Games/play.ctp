@@ -3,6 +3,16 @@
     <p>If less than 50% of players check the box, those players who checked it win 10 points.</p>
     <p>If more than 50% of players check the box, those players who checked the box lose 10 points!</p>
 
+    <?php if (empty($loggedUser)): ?>
+    <p>To play, <?= $this->Html->link('make an account', [
+        'controller' => 'Users',
+        'action' => 'add'
+    ]) ?> or <?= $this->Html->link('log in', [
+        'controller' => 'Users',
+        'action' => 'login'
+    ]) ?>.</p>
+    <?php else: ?>
+
     <?php if ($bCanPlay == true): ?>
     <?= $this->Form->create() ?>
     <?= $this->Form->input('checked_box', [
@@ -13,8 +23,12 @@
     <?= $this->Form->end() ?>
     <?php else: ?>
     <b><?= "You chose to " . ($usersPlay->checked_box ? "CHECK" : "NOT check") . " the box." ?></b>
-    <?php endif; ?>
-
+    <?php
+    endif;
+    endif;
+    ?>
+    <br/>
+    <h4>Past Games</h4>
     <table>
         <thead>
             <th>Start Time</th>

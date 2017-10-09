@@ -27,28 +27,12 @@
             <td><?= h($user->email) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Password') ?></th>
-            <td><?= h($user->password) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Activation String') ?></th>
-            <td><?= h($user->activation_string) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Api Key') ?></th>
             <td><?= h($user->api_key) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($user->id) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Score') ?></th>
             <td><?= $this->Number->format($user->score) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Enabled') ?></th>
-            <td><?= $user->enabled ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
     <div class="related">

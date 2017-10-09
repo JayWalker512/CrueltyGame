@@ -28,21 +28,19 @@ class UsersController extends AppController
     public function beforeFilter(\Cake\Event\Event $event)
     {
         parent::beforeFilter($event);
-
-        $this->Auth->allow('add');
-        $this->Auth->allow('login');
     }
 
     public function login()
     {
-        $user = $this->Auth->identify();
-        if ($user) {
-            $this->Auth->setUser($user);
-            $this->Flash->success('Success!');
-            return $this->redirect($this->Auth->redirectUrl());
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+                $this->Flash->success('Success!');
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            $this->Flash->error('Your username or password is incorrect.');
         }
-        $this->Flash->error('Your username or password is incorrect.');
-
     }
 
     public function logout()
@@ -73,8 +71,6 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        dump($this->Auth->user());
-
         $user = $this->Users->get($id, [
             'contain' => ['Games']
         ]);
@@ -149,5 +145,23 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function activate($apiKey) {
+        $apiKey = trim($apiKey);
+        if (!preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches) && strlen($apiKey) == 128) {
+            $matchedUser = $this->Users->find('all')->where([
+                'activation_string' => $apiKey
+            ])->first();
+
+            $matchedUser->enabled = true;
+            if ($this->Users->save($matchedUser)) {
+                $this->Flash->success("Your account has been activated.");
+                return $this->redirect(['controller' => 'games', 'action' => 'play']);
+            } else {
+                return $this->redirect($this->referer());
+            }
+        }
+        return $this->redirect($this->referer());
     }
 }

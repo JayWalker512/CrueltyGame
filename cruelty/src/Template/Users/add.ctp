@@ -19,11 +19,6 @@
             echo $this->Form->control('username');
             echo $this->Form->control('email');
             echo $this->Form->control('password');
-            echo $this->Form->control('activation_string');
-            echo $this->Form->control('enabled');
-            echo $this->Form->control('score');
-            echo $this->Form->control('api_key');
-            echo $this->Form->control('games._ids', ['options' => $games]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

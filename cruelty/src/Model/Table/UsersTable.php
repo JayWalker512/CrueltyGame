@@ -100,4 +100,63 @@ class UsersTable extends Table
 
         return $rules;
     }
+
+
+    /**
+    * Generate and return a random characters string
+    *
+    * Useful for generating passwords or hashes.
+    *
+    * The default string returned is 8 alphanumeric characters string.
+    *
+    * The type of string returned can be changed with the "type" parameter.
+    * Seven types are - by default - available: basic, alpha, alphanum, num, nozero, unique and md5.
+    *
+    * I pulled this function from https://gist.github.com/irazasyed/5382685
+    *
+    * @param   string  $type    Type of random string.  basic, alpha, alphanum, num, nozero, unique and md5.
+    * @param   integer $length  Length of the string to be generated, Default: 8 characters long.
+    * @return  string
+    */
+    private function random_str($type = 'alphanum', $length = 8)
+    {
+        switch($type)
+        {
+            case 'basic'    : return mt_rand();
+                break;
+            case 'alpha'    :
+            case 'alphanum' :
+            case 'num'      :
+            case 'nozero'   :
+                    $seedings             = array();
+                    $seedings['alpha']    = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    $seedings['alphanum'] = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    $seedings['num']      = '0123456789';
+                    $seedings['nozero']   = '123456789';
+
+                    $pool = $seedings[$type];
+
+                    $str = '';
+                    for ($i=0; $i < $length; $i++)
+                    {
+                        $str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
+                    }
+                    return $str;
+                break;
+            case 'unique'   :
+            case 'md5'      :
+                        return md5(uniqid(mt_rand()));
+                break;
+        }
+    }
+
+    public function beforeSave($event, $entity, $options) {
+        if ($entity->isNew()) {
+            $entity->activation_string = $this->random_str('alphanum', 128);
+            $entity->api_key = $this->random_str('alphanum', 128);
+        }
+    }
+
+
+
 }

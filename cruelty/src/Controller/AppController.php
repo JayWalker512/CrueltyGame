@@ -66,8 +66,8 @@ class AppController extends Controller
                 'action' => 'login'
             ],
             'loginRedirect' => [
-                'controller' => 'Users',
-                'action' => 'add'
+                'controller' => 'Games',
+                'action' => 'play'
             ],
             'unauthorizedRedirect' => $this->referer()
         ]);
