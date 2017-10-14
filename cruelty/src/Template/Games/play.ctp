@@ -1,4 +1,4 @@
-<div>
+
     <?php if (empty($loggedUser)): ?>
     <p>To play, <?= $this->Html->link('make an account', [
         'controller' => 'Users',
@@ -24,15 +24,15 @@
     <?= $this->Form->button('Submit') ?>
     <?= $this->Form->end() ?>
     <?php else: ?>
-    <?= "You chose to <b>" . ($usersPlay->checked_box ? "CHECK" : "NOT check") . "</b> the box." ?>
-    <?= "Your current score is " . $loggedUser->score ?>
+    <p><?= "You chose to <b>" . ($usersPlay->checked_box ? "CHECK" : "NOT check") . "</b> the box." ?></p>
+    <p><?= "Your current score is " . $loggedUser->score ?></p>
     <?php
     endif;
     endif;
     ?>
     <br/>
     <h4>Past Games</h4>
-    <table>
+    <table class="table">
         <thead>
             <th>Start Time</th>
             <th>End Time</th>
@@ -42,7 +42,11 @@
         </thead>
         <tbody>
             <?php foreach ($pastGames as $game): ?>
+            <?php if ($game->complete): ?>
+            <tr class="<?= ($game->ratio > 0.5 ? "danger" : "success") ?>">
+            <?php else: ?>
             <tr>
+            <?php endif; ?>
                 <td><?= $game->start_time ?></td>
                 <td><?= $game->end_time ?></td>
                 <td><?= $game->total_plays ?></td>
@@ -52,4 +56,3 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-</div>
