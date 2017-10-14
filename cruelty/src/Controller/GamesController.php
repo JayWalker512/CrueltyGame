@@ -56,7 +56,7 @@ class GamesController extends AppController
 
         $pastGames = $this->Games->find('all')->order([
             'id' => 'DESC'
-        ])->all();
+        ])->limit(5)->all();
         $this->set('pastGames', $pastGames);
 
         $leaderBoardUsers = $this->Users->find('all')->order([
