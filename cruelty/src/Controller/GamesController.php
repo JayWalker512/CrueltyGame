@@ -59,6 +59,11 @@ class GamesController extends AppController
         ])->all();
         $this->set('pastGames', $pastGames);
 
+        $leaderBoardUsers = $this->Users->find('all')->order([
+            'score' => 'DESC'
+        ])->limit(10)->all();
+        $this->set('users', $leaderBoardUsers);
+
 
         if ($this->request->is('post')) {
             if (!empty($loggedUser) && !empty($currentGame)) {
@@ -123,6 +128,12 @@ class GamesController extends AppController
     public function runGame()
     {
         $this->Games->runGame();
+        $this->redirect(['action' => 'play']);
+    }
+
+    public function newGame()
+    {
+        $this->Games->createNewGame();
         $this->redirect(['action' => 'play']);
     }
 

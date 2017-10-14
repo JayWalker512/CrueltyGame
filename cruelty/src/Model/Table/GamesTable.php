@@ -111,11 +111,10 @@ class GamesTable extends Table
 
         $totalPlays = $currentGameCheckedCount + $currentGameUncheckedCount;
 
-
         //TODO FIXME If not enough players, extend the end time and bail;
-        /*if ($totalPlays < 10) {
+        if ($totalPlays == 0) {
             return false;
-        }*/
+        }
 
         //update current game fields
         $currentGame->total_checked = $currentGameCheckedCount;
@@ -125,6 +124,33 @@ class GamesTable extends Table
         //save game as 'complete'
         $currentGame->complete = true;
         $this->save($currentGame);
+
+        //get all the users that played this round
+
+        //xdebug_break();
+        $usersTable = TableRegistry::get('Users');
+        $usersWhoCheckedThisGameIdArray = $gamesUsersTable->find('list', [
+            'valueField' => 'user_id'
+        ])->where([
+            'game_id' => $currentGame->id,
+            'checked_box' => true
+        ])->toArray();
+        $currentGameCheckedUsers = $usersTable->find('all')->where([
+            'id IN' => (!empty($usersWhoCheckedThisGameIdArray) ? $usersWhoCheckedThisGameIdArray : [0])
+        ]);
+
+        //update users scores
+        foreach ($currentGameCheckedUsers as $user) {
+            if ($currentGame->ratio > 0.5) {
+                if ($user->score != 0) {
+                    $user->score = (int)$user->score - 10;
+                }
+            } else {
+                $user->score = (int)$user->score + 10;
+            }
+            $usersTable->save($user);
+        }
+
 
         //create next incomplete game & save
         $this->createNewGame();
