@@ -11,21 +11,19 @@
 
     <?php if ($bCanPlay == true): ?>
     <h2>How To Play</h2>
-    <ul>
-        <li>If less than 50% of players check the box, those players who checked it win 10 points.</li>
-        <li>If more than 50% of players check the box, those players who checked the box lose 10 points!</li>
-    </ul>
-
+    <p>If <b>less</b> than 50% of players check the box, those players who checked it win 10 points.</p>
+    <p>If <b>more</b> than 50% of players check the box, those players who checked the box lose 10 points!</p>
+    <p><?= "Your current score is " . $loggedUser->score ?></p>
     <?= $this->Form->create() ?>
     <?= $this->Form->input('checked_box', [
         'type' => 'checkbox',
         'label' => 'Check the box?'
     ]) ?>
-    <?= $this->Form->button('Submit') ?>
+    <?= $this->Form->button('Play') ?>
     <?= $this->Form->end() ?>
     <?php else: ?>
     <p><?= "You chose to <b>" . ($usersPlay->checked_box ? "CHECK" : "NOT check") . "</b> the box." ?></p>
-    <p><?= "Your current score is " . $loggedUser->score ?></p>
+
     <?php
     endif;
     endif;

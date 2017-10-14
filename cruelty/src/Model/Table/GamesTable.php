@@ -113,9 +113,9 @@ class GamesTable extends Table
 
 
         //TODO FIXME If not enough players, extend the end time and bail;
-        if ($totalPlays < 10) {
+        /*if ($totalPlays < 10) {
             return false;
-        }
+        }*/
 
         //update current game fields
         $currentGame->total_checked = $currentGameCheckedCount;
