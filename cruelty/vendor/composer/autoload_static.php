@@ -77,6 +77,7 @@ class ComposerStaticInit739ebafc3e142fad5dde91b8b1653e91
         ),
         'B' => 
         array (
+            'Bootstrap\\' => 10,
             'Bake\\' => 5,
         ),
         'A' => 
@@ -219,6 +220,10 @@ class ComposerStaticInit739ebafc3e142fad5dde91b8b1653e91
         'CakePHP\\' => 
         array (
             0 => __DIR__ . '/..' . '/cakephp/cakephp-codesniffer/CakePHP',
+        ),
+        'Bootstrap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/holt59/cakephp3-bootstrap-helpers/src',
         ),
         'Bake\\' => 
         array (

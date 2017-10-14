@@ -2214,5 +2214,49 @@
             "codesniffer",
             "framework"
         ]
+    },
+    {
+        "name": "holt59/cakephp3-bootstrap-helpers",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Holt59/cakephp3-bootstrap-helpers.git",
+            "reference": "43e00d23c7c2440fb576e613fde92bed5ac244ee"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Holt59/cakephp3-bootstrap-helpers/zipball/43e00d23c7c2440fb576e613fde92bed5ac244ee",
+            "reference": "43e00d23c7c2440fb576e613fde92bed5ac244ee",
+            "shasum": ""
+        },
+        "require": {
+            "cakephp/cakephp": ">=3.4.0",
+            "php": ">=5.5.9"
+        },
+        "require-dev": {
+            "cakephp/cakephp-codesniffer": "~2.1",
+            "phpunit/phpunit": "<6.0"
+        },
+        "time": "2017-09-17T13:21:22+00:00",
+        "type": "cakephp-plugin",
+        "extra": {
+            "installer-name": "Bootstrap"
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Bootstrap\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Bootstrap Helpers for CakePHP 3.0",
+        "keywords": [
+            "bootstrap",
+            "cakephp"
+        ]
     }
 ]
