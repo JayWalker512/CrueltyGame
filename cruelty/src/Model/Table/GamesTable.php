@@ -112,7 +112,9 @@ class GamesTable extends Table
         $totalPlays = $currentGameCheckedCount + $currentGameUncheckedCount;
 
         //TODO FIXME If not enough players, extend the end time and bail;
-        if ($totalPlays == 0) {
+        if ($totalPlays < 5) {
+            $currentGame->end_time = $currentGame->end_time->addHour(1);
+            $this->save($currentGame);
             return false;
         }
 
@@ -127,7 +129,6 @@ class GamesTable extends Table
 
         //get all the users that played this round
 
-        //xdebug_break();
         $usersTable = TableRegistry::get('Users');
         $usersWhoCheckedThisGameIdArray = $gamesUsersTable->find('list', [
             'valueField' => 'user_id'

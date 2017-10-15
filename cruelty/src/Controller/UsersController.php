@@ -65,6 +65,7 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
+                $this->Users->sendActivation($user->id);
                 $this->Flash->success(__('Your account has been created. Check your email for an activation link.'));
 
                 return $this->redirect(['users' => 'login']);

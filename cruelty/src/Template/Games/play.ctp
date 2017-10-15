@@ -14,7 +14,7 @@
 <p>If <b>less</b> than 50% of players check the box, those players who checked it win 10 points.</p>
 <p>If <b>more</b> than 50% of players check the box, those players who checked the box lose 10 points!</p>
 <br/>
-<p><?= "You are logged in as <b>" . h($loggedUser->username) . "</b> and your current score is " . $loggedUser->score ?></p>
+<p><?= "You are logged in as <b>" . h($loggedUser->username) . "</b>and your current score is " . $loggedUser->score ?></p>
 <?= $this->Form->create() ?>
 <?= $this->Form->input('checked_box', [
     'type' => 'checkbox',

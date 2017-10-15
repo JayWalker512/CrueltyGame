@@ -5,6 +5,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Mailer\Email;
 
 /**
  * Users Model
@@ -156,6 +157,25 @@ class UsersTable extends Table
             $entity->api_key = $this->random_str('alphanum', 128);
             $entity->enabled = false;
         }
+    }
+
+    public function sendActivation($userId)
+    {
+        $user = $this->get($userId);
+
+        $email = new Email('default');
+
+        $email->setTemplate('activate', 'default')
+            ->setEmailFormat('html')
+            ->setFrom("admin@brandonfoltz.com", "Cruelty Game")
+            ->setSubject('Activate your account.')
+            ->setViewVars([
+                'user' => $user
+            ]);
+
+        $email->addTo($user->email);
+
+        $email->send();
     }
 
 
