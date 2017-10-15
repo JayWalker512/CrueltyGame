@@ -13,12 +13,15 @@
 <h2>How To Play</h2>
 <p>If <b>less</b> than 50% of players check the box, those players who checked it win 10 points.</p>
 <p>If <b>more</b> than 50% of players check the box, those players who checked the box lose 10 points!</p>
-<p><?= "Your current score is " . $loggedUser->score ?></p>
+<br/>
+<p><?= "You are logged in as <b>" . h($loggedUser->username) . "</b> and your current score is " . $loggedUser->score ?></p>
 <?= $this->Form->create() ?>
 <?= $this->Form->input('checked_box', [
     'type' => 'checkbox',
-    'label' => 'Check the box?'
+    'label' => 'Check the box?',
+    'font-size' => '2.5em'
 ]) ?>
+
 <?= $this->Form->button('Play') ?>
 <?= $this->Form->end() ?>
 <?php else: ?>

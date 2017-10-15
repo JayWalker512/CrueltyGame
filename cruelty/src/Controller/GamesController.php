@@ -28,7 +28,7 @@ class GamesController extends AppController
 
     public function about()
     {
-        
+
     }
 
     public function play()
@@ -100,23 +100,27 @@ class GamesController extends AppController
         $apiKey = $this->request->getQuery('api_key');
         $apiKey = trim($apiKey);
 
-
         if (preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches)) {
-            //return $this->redirect($this->referer());
+            //we just drop through and say success. Why give hints?
         } else {
             $loggedUser = $this->Users->find('all')->where([
                 'api_key' => $apiKey
             ])->first();
 
-            $checkedBox = $this->request->getQuery('c');
-
-            if ($checkedBox == '0') {
-
-            } else {
-
+            if (!empty($loggedUser) && $loggedUser->enabled == true) {
+                $checkedBox = $this->request->getQuery('c');
+                if ($checkedBox == '0') {
+                    $this->GamesUsers->insertPlay($loggedUser->id, 0);
+                } else {
+                    $this->GamesUsers->insertPlay($loggedUser->id, 1);
+                }
             }
         }
 
+        $this->viewBuilder()->className('Json');
+        $content = ['success' => 1];
+        $this->set(compact('content'));
+        $this->set('_serialize', ['content']);
 
     }
 

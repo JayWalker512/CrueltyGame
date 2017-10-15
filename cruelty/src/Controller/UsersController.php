@@ -32,19 +32,19 @@ class UsersController extends AppController
 
     public function api()
     {
-        
+
     }
 
     public function login()
     {
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
-            if ($user) {
+            if ($user && $user['enabled'] == true) {
                 $this->Auth->setUser($user);
                 $this->Flash->success('Successfully logged in!');
                 return $this->redirect($this->Auth->redirectUrl());
             }
-            $this->Flash->error('Your username or password is incorrect.');
+            $this->Flash->error('Your username or password is incorrect, or your account is disabled.');
         }
     }
 
@@ -52,36 +52,6 @@ class UsersController extends AppController
     {
         $this->Flash->success('You are now logged out.');
         return $this->redirect($this->Auth->logout());
-    }
-
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
-    public function index()
-    {
-        $users = $this->paginate($this->Users);
-
-        $this->set(compact('users'));
-        $this->set('_serialize', ['users']);
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $user = $this->Users->get($id, [
-            'contain' => ['Games']
-        ]);
-
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
     }
 
     /**
@@ -132,39 +102,23 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id User id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
-        }
+    public function activate($activationString) {
+        $activationString = trim($activationString);
+        if (!preg_match('/[^a-zA-Z0-9]+/', $activationString, $matches) && strlen($activationString) == 128) {
 
-        return $this->redirect(['action' => 'index']);
-    }
+            $matchedUser = $this->Users->findByActivationString($activationString)->first();
 
-    public function activate($apiKey) {
-        $apiKey = trim($apiKey);
-        if (!preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches) && strlen($apiKey) == 128) {
-            $matchedUser = $this->Users->find('all')->where([
-                'activation_string' => $apiKey
-            ])->first();
 
-            $matchedUser->enabled = true;
-            if ($this->Users->save($matchedUser)) {
-                $this->Flash->success("Your account has been activated.");
-                return $this->redirect(['controller' => 'games', 'action' => 'play']);
-            } else {
-                return $this->redirect($this->referer());
+            if ($matchedUser) {
+                $matchedUser->enabled = true;
+
+                if ($this->Users->save($matchedUser)) {
+                    $this->Flash->success("Your account has been activated.");
+                    return $this->redirect(['controller' => 'games', 'action' => 'play']);
+                } else {
+                    $this->Flash->error("Something went wrong...");
+                    return $this->redirect($this->referer());
+                }
             }
         }
         return $this->redirect($this->referer());

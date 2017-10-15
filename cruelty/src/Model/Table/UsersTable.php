@@ -128,24 +128,24 @@ class UsersTable extends Table
             case 'alphanum' :
             case 'num'      :
             case 'nozero'   :
-                    $seedings             = array();
-                    $seedings['alpha']    = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    $seedings['alphanum'] = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                    $seedings['num']      = '0123456789';
-                    $seedings['nozero']   = '123456789';
+                $seedings             = array();
+                $seedings['alpha']    = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $seedings['alphanum'] = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $seedings['num']      = '0123456789';
+                $seedings['nozero']   = '123456789';
 
-                    $pool = $seedings[$type];
+                $pool = $seedings[$type];
 
-                    $str = '';
-                    for ($i=0; $i < $length; $i++)
-                    {
-                        $str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
-                    }
-                    return $str;
+                $str = '';
+                for ($i=0; $i < $length; $i++)
+                {
+                    $str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
+                }
+                return $str;
                 break;
             case 'unique'   :
             case 'md5'      :
-                        return md5(uniqid(mt_rand()));
+                return md5(uniqid(mt_rand()));
                 break;
         }
     }
@@ -154,6 +154,7 @@ class UsersTable extends Table
         if ($entity->isNew()) {
             $entity->activation_string = $this->random_str('alphanum', 128);
             $entity->api_key = $this->random_str('alphanum', 128);
+            $entity->enabled = false;
         }
     }
 
