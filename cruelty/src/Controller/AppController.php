@@ -28,6 +28,27 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
+    public $helpers = [
+        'Form' => [
+            'className' => 'Bootstrap.Form'
+        ],
+        'Html' => [
+            'className' => 'Bootstrap.Html'
+        ],
+        'Modal' => [
+            'className' => 'Bootstrap.Modal'
+        ],
+        'Navbar' => [
+            'className' => 'Bootstrap.Navbar'
+        ],
+        'Paginator' => [
+            'className' => 'Bootstrap.Paginator'
+        ],
+        'Panel' => [
+            'className' => 'Bootstrap.Panel'
+        ]
+    ];
+
     /**
      * Initialization hook method.
      *
@@ -72,7 +93,9 @@ class AppController extends Controller
             'unauthorizedRedirect' => $this->referer()
         ]);
 
-        $this->Auth->allow(['display', 'login']);
+        $this->Auth->allow([
+            'display', 'login', 'add', 'play', 'api', 'activate', 'about'
+        ]);
     }
 
     /**

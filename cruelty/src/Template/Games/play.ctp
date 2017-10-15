@@ -1,12 +1,12 @@
 
 <?php if (empty($loggedUser)): ?>
-<p>To play, <?= $this->Html->link('make an account', [
+<h2>To play, <?= $this->Html->link('make an account', [
     'controller' => 'Users',
     'action' => 'add'
 ]) ?> or <?= $this->Html->link('log in', [
     'controller' => 'Users',
     'action' => 'login'
-]) ?>.</p>
+]) ?>.</h2>
 <?php else: ?>
 
 <?php if ($bCanPlay == true): ?>

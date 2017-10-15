@@ -26,6 +26,11 @@ class GamesController extends AppController
         return true;
     }
 
+    public function about()
+    {
+        
+    }
+
     public function play()
     {
         $loggedUser = $this->Auth->user();

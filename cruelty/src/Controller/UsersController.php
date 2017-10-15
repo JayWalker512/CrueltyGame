@@ -30,13 +30,18 @@ class UsersController extends AppController
         parent::beforeFilter($event);
     }
 
+    public function api()
+    {
+        
+    }
+
     public function login()
     {
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
                 $this->Auth->setUser($user);
-                $this->Flash->success('Success!');
+                $this->Flash->success('Successfully logged in!');
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error('Your username or password is incorrect.');
@@ -90,9 +95,9 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('Your account has been created. Check your email for an activation link.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['users' => 'login']);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }

@@ -46,15 +46,18 @@ $cakeDescription = 'Cruelty';
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><?= $this->Html->link('Play', [
-                        'controller' => 'Games'
+                    <li class="<?= ($this->request->getParam('action') == "play" ? "active" : null) ?>"><?= $this->Html->link('Play', [
+                        'controller' => 'Games',
+                        'action' => 'play'
                     ]) ?></li>
-                    <li><?= $this->Html->link('About', [
-                        'controller' => 'Games'
-                    ]) ?></li></li>
-                    <li><?= $this->Html->link('API', [
-                        'controller' => 'Games'
-                    ]) ?></li></li>
+                    <li class="<?= ($this->request->getParam('action') == "about" ? "active" : null) ?>"><?= $this->Html->link('About', [
+                        'controller' => 'Games',
+                        'action' => 'about'
+                    ]) ?></li>
+                    <li class="<?= ($this->request->getParam('action') == "api" ? "active" : null) ?>"><?= $this->Html->link('API', [
+                        'controller' => 'Users',
+                        'action' => 'api'
+                    ]) ?></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -63,11 +66,7 @@ $cakeDescription = 'Cruelty';
     <div class="container">
         <div class="starter-template">
             <?= $this->Flash->render() ?>
-            <!--<div class="row">-->
-                <!--<div class="col-md-12">-->
-                <?= $this->fetch('content') ?>
-                <!--</div>-->
-            <!--</div>-->
+            <?= $this->fetch('content') ?>
         </div>
     </div><!-- /.container -->
 </body>
