@@ -6,6 +6,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Mailer\Email;
+use Cake\Log\Log;
+use Cake\Network\Exception\SocketException;
 
 /**
  * Users Model
@@ -175,7 +177,11 @@ class UsersTable extends Table
 
         $email->addTo($user->email);
 
-        $email->send();
+        try {
+            $email->send();
+        } catch (\Cake\Network\Exception\SocketException $e) {
+            Log::write("error", "Couldn't send activation email!");
+        }
     }
 
 
