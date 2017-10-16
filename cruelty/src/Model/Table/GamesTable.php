@@ -168,4 +168,13 @@ class GamesTable extends Table
         $this->save($newGame);
         return $newGame;
     }
+    
+    public function getCurrentGame()
+    {
+        $currentGame = $this->find('all')->where([
+            'complete' => false
+        ])->first();
+        
+        return $currentGame;
+    }
 }

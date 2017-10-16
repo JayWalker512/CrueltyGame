@@ -98,37 +98,49 @@ class GamesController extends AppController
         //letters (U and l), and numbers. No whitespace.
 
         $apiKey = $this->request->getQuery('api_key');
-        $apiKey = trim($apiKey);
+        
+        $loggedUser = $this->Users->getUserByApiKey($apiKey);
 
-        if (preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches)) {
-            //we just drop through and say success. Why give hints?
-        } else {
-            $loggedUser = $this->Users->find('all')->where([
-                'api_key' => $apiKey
-            ])->first();
-
-            if (!empty($loggedUser) && $loggedUser->enabled == true) {
-                $checkedBox = $this->request->getQuery('c');
-                if ($checkedBox == '0') {
-                    $this->GamesUsers->insertPlay($loggedUser->id, 0);
-                } else {
-                    $this->GamesUsers->insertPlay($loggedUser->id, 1);
-                }
+        if (!empty($loggedUser) && $loggedUser->enabled == true) {
+            $checkedBox = $this->request->getQuery('c');
+            if ($checkedBox == '0') {
+                $this->GamesUsers->insertPlay($loggedUser->id, 0);
+            } else {
+                $this->GamesUsers->insertPlay($loggedUser->id, 1);
             }
         }
-
-        //$this->autoRender = false;
+        
+        $content = ['success' => 1];
+        $this->RequestHandler->renderAs($this, 'json');
+        $this->response->type('application/json');
+        $this->viewBuilder()->setClassName('Json');        
+        $this->set(compact('content'));
+        $this->set('_serialize', ['content']);
+    }
+    
+    public function canPlay()
+    {
+        $apiKey = $this->request->getQuery('api_key');
+        
+        $loggedUser = $this->Users->getUserByApiKey($apiKey);
+        
+        $content = ['canPlay' => 0];
+        if (!empty($loggedUser) && $loggedUser->enabled) {
+            $currentGame = $this->Games->getCurrentGame();
+            $play = $this->GamesUsers->find('all')->where([
+                'user_id' => $loggedUser->id,
+                'game_id' => $currentGame->id
+            ]);
+            if ($play->count() == 0) {
+                $content = ['canPlay' => 1];
+            }
+        }
+        
         $this->RequestHandler->renderAs($this, 'json');
         $this->response->type('application/json');
         $this->viewBuilder()->setClassName('Json');
-        $content = ['success' => 1];
-        //$jsonContent = json_encode($content);
-        //$this->response->body($jsonContent);
-        //return $this->response;
-        
         $this->set(compact('content'));
         $this->set('_serialize', ['content']);
-
     }
 
     public function randomGame()

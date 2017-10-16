@@ -8,7 +8,9 @@
 <fieldset>
     <legend><?= __('Create Account') ?></legend>
     <?php
-        echo $this->Form->control('username');
+        echo $this->Form->control('username', [
+            'label' => 'Username (this will show on the Leader Board)'
+        ]);
         echo $this->Form->control('email');
         echo $this->Form->control('password');
     ?>

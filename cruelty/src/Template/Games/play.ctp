@@ -16,13 +16,12 @@
 <br/>
 <p><?= "You are logged in as <b>" . h($loggedUser->username) . "</b> and your current score is <b>" . $loggedUser->score ?></b>.</p>
 <?= $this->Form->create() ?>
-<?= $this->Form->input('checked_box', [
-    'type' => 'checkbox',
-    'label' => 'Check the box?',
-    'font-size' => '2.5em'
-]) ?>
 
-<?= $this->Form->button('Play') ?>
+<?= $this->Form->button("Check the box") ?>
+<?= $this->Form->button("DON'T check the box", [
+    'name' => 'checked_box',
+    'value' => '0'
+]) ?>
 <?= $this->Form->end() ?>
 <?php else: ?>
 <p><?= "You chose to <b>" . ($usersPlay->checked_box ? "CHECK" : "NOT check") . "</b> the box. Wait until the game ends to play again!" ?></p>
@@ -38,7 +37,7 @@ endif;
         <th>Start Time</th>
         <th>End Time</th>
         <th>Total Plays</th>
-        <th>Total Checked</th>
+        <th>You</th>
         <th>Ratio</th>
     </thead>
     <tbody>
@@ -51,7 +50,7 @@ endif;
             <td><?= $game->start_time ?></td>
             <td><?= $game->end_time ?></td>
             <td><?= $game->total_plays ?></td>
-            <td><?= ($game->complete == true ? $game->total_checked : "???") ?></td>
+            <td><?= "test" ?></td>
             <td><?= ($game->complete == true ? $game->ratio : "???") ?></td>
         </tr>
         <?php endforeach; ?>
