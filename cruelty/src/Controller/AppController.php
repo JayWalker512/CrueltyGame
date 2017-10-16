@@ -94,7 +94,7 @@ class AppController extends Controller
         ]);
 
         $this->Auth->allow([
-            'display', 'login', 'add', 'play', 'api', 'activate', 'about'
+            'display', 'login', 'add', 'play', 'api', 'activate', 'about', 'botPlay'
         ]);
     }
 

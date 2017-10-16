@@ -117,11 +117,15 @@ class GamesController extends AppController
             }
         }
 
+        //$this->autoRender = false;
         $this->RequestHandler->renderAs($this, 'json');
         $this->response->type('application/json');
-        //$this->viewBuilder()->setLayout('ajax');
         $this->viewBuilder()->setClassName('Json');
         $content = ['success' => 1];
+        //$jsonContent = json_encode($content);
+        //$this->response->body($jsonContent);
+        //return $this->response;
+        
         $this->set(compact('content'));
         $this->set('_serialize', ['content']);
 
