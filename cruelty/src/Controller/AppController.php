@@ -94,7 +94,10 @@ class AppController extends Controller
         ]);
 
         $this->Auth->allow([
-            'display', 'login', 'add', 'play', 'api', 'activate', 'about', 'botPlay'
+            'display', 'login', 'add', 'play', 'api', 'activate', 'about', 
+            
+            //bot actions
+            'botPlay', 'canPlay'
         ]);
     }
 
@@ -114,6 +117,15 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+    
+    public function setJsonResponse(array $content)
+    {
+        $this->RequestHandler->renderAs($this, 'json');
+        $this->response->type('application/json');
+        $this->viewBuilder()->setClassName('Json');        
+        $this->set(compact('content'));
+        $this->set('_serialize', ['content']);
     }
 
 

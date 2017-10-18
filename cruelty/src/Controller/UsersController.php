@@ -32,7 +32,12 @@ class UsersController extends AppController
 
     public function api()
     {
-
+        if ($this->Auth->user()) {
+            $loggedUser = $this->Users->get($this->Auth->user('id'));
+            if (!empty($loggedUser)) {
+                $this->set('apiKey', $loggedUser->api_key);
+            }
+        }
     }
 
     public function login()

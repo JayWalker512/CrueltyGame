@@ -3,7 +3,7 @@
 <p>In a class that John taught at Temple University, he would put a checkbox at the bottom of a daily quiz with the following notes (paraphrased).</p>
 <blockquote>Students who check the box will receive ten extra points on their quiz. However if more than half the class checks the box, those students who checked it will lose ten points.</blockquote>
 <p>This game is essentially the same, I've simply done away with the pedagogy and kept only the cruelty.</p>
-<p>If you have questions or suggestions, please email <a href="mailto:admin@brandonfoltz.com">admin@brandonfoltz.com</a>.</p>
+<p>If you have questions or suggestions, please email <a href="mailto:admin@brandonfoltz.com">admin@brandonfoltz.com</a> or tweet <a href="https://twitter.com/CrueltyGame">@CrueltyGame</a>.</p>
 <h2>FAQ / Other Stuff</h2>
 <ul>
     <li><b>How do I make an account?</b></li>
@@ -23,6 +23,7 @@
     <br/>
     <li><b>I think I found a bug...</b></li>
     <ul>
-        <li>Email me at <a href="mailto:admin@brandonfoltz.com">admin@brandonfoltz.com</a> or post an issue in the <a href="https://github.com/JayWalker512/CrueltyGame">Github repository.</a></li>
+        <li>Email me at <a href="mailto:admin@brandonfoltz.com">admin@brandonfoltz.com</a>, tweet <a href="https://twitter.com/CrueltyGame">@CrueltyGame</a>, or post an issue in the <a href="https://github.com/JayWalker512/CrueltyGame">Github repository.</a></li>
     </ul>
 </ul>
+<a class="twitter-timeline" href="https://twitter.com/CrueltyGame?ref_src=twsrc%5Etfw">Tweets by CrueltyGame</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>

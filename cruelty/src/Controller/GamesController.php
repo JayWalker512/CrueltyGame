@@ -97,7 +97,7 @@ class GamesController extends AppController
         //128 characters long
         //letters (U and l), and numbers. No whitespace.
 
-        $apiKey = $this->request->getQuery('api_key');
+        $apiKey = $this->request->getQuery('apiKey');
         
         $loggedUser = $this->Users->getUserByApiKey($apiKey);
 
@@ -111,17 +111,12 @@ class GamesController extends AppController
         }
         
         $content = ['success' => 1];
-        $this->RequestHandler->renderAs($this, 'json');
-        $this->response->type('application/json');
-        $this->viewBuilder()->setClassName('Json');        
-        $this->set(compact('content'));
-        $this->set('_serialize', ['content']);
+        $this->setJsonResponse($content);
     }
     
     public function canPlay()
     {
-        $apiKey = $this->request->getQuery('api_key');
-        
+        $apiKey = $this->request->getQuery('apiKey');
         $loggedUser = $this->Users->getUserByApiKey($apiKey);
         
         $content = ['canPlay' => 0];
@@ -136,11 +131,7 @@ class GamesController extends AppController
             }
         }
         
-        $this->RequestHandler->renderAs($this, 'json');
-        $this->response->type('application/json');
-        $this->viewBuilder()->setClassName('Json');
-        $this->set(compact('content'));
-        $this->set('_serialize', ['content']);
+        $this->setJsonResponse($content);
     }
 
     public function randomGame()
