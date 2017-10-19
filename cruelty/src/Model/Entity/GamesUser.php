@@ -27,10 +27,10 @@ class GamesUser extends Entity
      * @var array
      */
     protected $_accessible = [
-        'user_id' => true,
-        'game_id' => true,
-        'checked_box' => true,
-        'user' => true,
-        'game' => true
+        'user_id' => false,
+        'game_id' => false,
+        'checked_box' => false,
+        'user' => false,
+        'game' => false
     ];
 }

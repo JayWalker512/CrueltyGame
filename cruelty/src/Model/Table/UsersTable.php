@@ -60,15 +60,18 @@ class UsersTable extends Table
 
         $validator
             ->scalar('username')
-            ->allowEmpty('username');
+            ->lengthBetween('username', [1, 32])
+            ->alphaNumeric('username')
+            ->notEmpty('username');
 
         $validator
             ->email('email')
-            ->allowEmpty('email');
+            ->notEmpty('email');
 
         $validator
             ->scalar('password')
-            ->allowEmpty('password');
+            ->lengthBetween('password', [8, 64])
+            ->notEmpty('password');
 
         $validator
             ->scalar('activation_string')
@@ -183,7 +186,7 @@ class UsersTable extends Table
             Log::write("error", "Couldn't send activation email!");
         }
     }
-    
+
     public function getUserByApiKey($apiKey)
     {
         $apiKey = trim($apiKey);
@@ -191,15 +194,15 @@ class UsersTable extends Table
         if (preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches)) {
             return false; //api key invalid, bail out
         }
-        
+
         $loggedUser = $this->find('all')->where([
             'api_key' => $apiKey
         ])->first();
-        
+
         if (empty($loggedUser)) {
             return false;
         }
-        
+
         return $loggedUser;
     }
 

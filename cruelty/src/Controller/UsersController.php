@@ -73,12 +73,12 @@ class UsersController extends AppController
                 $this->Users->sendActivation($user->id);
                 $this->Flash->success(__('Your account has been created. Check your email for an activation link.'));
 
-                return $this->redirect(['users' => 'login']);
+                return $this->redirect(['controller' => 'games', 'action' => 'play']);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $games = $this->Users->Games->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'games'));
+
+        $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
 

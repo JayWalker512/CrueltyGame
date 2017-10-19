@@ -34,10 +34,10 @@ class User extends Entity
         'username' => true,
         'email' => true,
         'password' => true,
-        'activation_string' => true,
-        'enabled' => true,
-        'score' => true,
-        'api_key' => true,
+        'activation_string' => false,
+        'enabled' => false,
+        'score' => false,
+        'api_key' => false,
         'games' => true
     ];
 
