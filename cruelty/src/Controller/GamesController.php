@@ -98,7 +98,7 @@ class GamesController extends AppController
         //letters (U and l), and numbers. No whitespace.
 
         $apiKey = $this->request->getQuery('apiKey');
-        
+
         $loggedUser = $this->Users->getUserByApiKey($apiKey);
 
         if (!empty($loggedUser) && $loggedUser->enabled == true) {
@@ -109,16 +109,16 @@ class GamesController extends AppController
                 $this->GamesUsers->insertPlay($loggedUser->id, 1);
             }
         }
-        
+
         $content = ['success' => 1];
         $this->setJsonResponse($content);
     }
-    
+
     public function canPlay()
     {
         $apiKey = $this->request->getQuery('apiKey');
         $loggedUser = $this->Users->getUserByApiKey($apiKey);
-        
+
         $content = ['canPlay' => 0];
         if (!empty($loggedUser) && $loggedUser->enabled) {
             $currentGame = $this->Games->getCurrentGame();
@@ -130,7 +130,26 @@ class GamesController extends AppController
                 $content = ['canPlay' => 1];
             }
         }
-        
+
+        $this->setJsonResponse($content);
+    }
+
+    public function history()
+    {
+        $pastGames = $this->Games->find('all')->where([
+
+        ])->order([
+            'id' => 'DESC'
+        ])->limit(100)->toArray();
+
+        foreach($pastGames as $game) {
+            if ($game['complete'] == false) {
+                $game['total_checked'] = "???";
+                $game['ratio'] = "???";
+            }
+        }
+
+        $content = $pastGames;
         $this->setJsonResponse($content);
     }
 

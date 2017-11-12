@@ -13,11 +13,39 @@
 <h3>Submitting a play</h3>
 <p>Make a GET request to the following URL with the query values <b>c</b> and <b>apiKey</b> set appropriately:</p>
 <pre>http://cruelty.brandonfoltz.com/games/botPlay?c=1&apiKey=someverylongstringwithlettersandnumbers1111</pre>
-<p><b>c</b> should be set to <b>0</b> or <b>1</b>, corresponding to NOT checking the box and CHECKING the box respectively. <b>apiKey</b> should be your API key value. 
+<p><b>c</b> should be set to <b>0</b> or <b>1</b>, corresponding to NOT checking the box and CHECKING the box respectively. <b>apiKey</b> should be your API key value.
 A JSON response will be returned in the following format:</p>
 <pre>{
     "content": {
         "success": 1
     }
 }</pre>
+<h3>Getting game history</h3>
+<p>Make a GET request to: <pre>http://cruelty.brandonfoltz.com/games/history</pre> and receive a JSON response similar to this example:
+<pre>
+{
+    "content": [
+        {
+            "id": 35,
+            "start_time": "2017-10-19T02:44:17+00:00",
+            "end_time": "2017-10-20T03:44:17+00:00",
+            "total_plays": 1,
+            "total_checked": "???",
+            "ratio": "???",
+            "complete": false
+        },
+        {
+            "id": 34,
+            "start_time": "2017-10-19T02:44:08+00:00",
+            "end_time": "2017-10-20T02:44:08+00:00",
+            "total_plays": 13,
+            "total_checked": 3,
+            "ratio": 0.23,
+            "complete": true
+        },
+        ...
+    ]
+}
+</pre>
+The response will include the 100 most recent games data. The first entry is the current game in progress (with <b>total_checked</b> and <b>ratio</b> removed).</p>
 
