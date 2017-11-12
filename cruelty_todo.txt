@@ -1,3 +1,5 @@
+MVP features:
+
 Pages Needed:
 	login [working]
 
@@ -12,10 +14,14 @@ Pages Needed:
 		- show api key
 		- button to reset api key
 
-
 Code TODO:
 	play game logic
 		- cron job to do calculation and end game
 
 		- bot api for automated playing
 			- uses api key
+
+Extra stuff:
+	
+	Donation page with XMR webminer
+		-gamify this feature by tracking shares submitted, and give players titles like "Legendary Donator", "Epic Donator", etc. which will be shown (colored icon) with their name on the high-score list. Also keep a top-donator list on the donation page. 
