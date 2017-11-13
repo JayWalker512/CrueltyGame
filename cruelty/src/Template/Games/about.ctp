@@ -9,12 +9,14 @@
     <li><b>How do I make an account?</b></li>
     <ul>
         <li><?= $this->Html->link("By clicking here.", ['controller' => 'users', 'action' => 'add']) ?></li>
-    </ul>  
+    </ul>
     <br/>
+    <?php if (!empty($loggedUser)): ?>
     <li><b>How do I change my password?</b></li>
     <ul>
-        <li>If you're logged in, you can <?= $this->Html->link("edit your account and preferences here.", ['controller' => 'users', 'action' => 'edit']) ?></li>
+        <li>If you're logged in, you can <?= $this->Html->link("edit your account and preferences here.", ['controller' => 'users', 'action' => 'edit', $loggedUser->id]) ?></li>
     </ul>
+    <?php endif; ?>
     <br/>
     <li><b>How can I make a bot to play?</b></li>
     <ul>

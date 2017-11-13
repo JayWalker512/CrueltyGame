@@ -18,7 +18,9 @@
 <fieldset>
     <legend><?= __('Change Password') ?></legend>
     <?php
-        echo $this->Form->control('password');
+        echo $this->Form->control('old_password');
+        echo $this->Form->control('new_password');
+        echo $this->Form->control('confirm_new_password');
     ?>
 </fieldset>
 <?= $this->Form->button(__('Save')) ?>

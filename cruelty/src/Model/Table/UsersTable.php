@@ -104,6 +104,8 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
 
+        //TODO FIXME do not allow changing username or email!
+
         return $rules;
     }
 

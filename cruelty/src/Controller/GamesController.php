@@ -28,7 +28,10 @@ class GamesController extends AppController
 
     public function about()
     {
-
+        $loggedUser = $this->Auth->user();
+        if (!empty($loggedUser)) {
+            $this->set('loggedUser', $this->Users->get($loggedUser['id']));
+        }
     }
 
     public function play()
