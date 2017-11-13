@@ -189,6 +189,10 @@ class UsersTable extends Table
 
     public function getUserByApiKey($apiKey)
     {
+        if (empty($apiKey)) {
+            return false;
+        }
+
         $apiKey = trim($apiKey);
 
         if (preg_match('/[^a-zA-Z0-9]+/', $apiKey, $matches)) {

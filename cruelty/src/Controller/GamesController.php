@@ -136,17 +136,30 @@ class GamesController extends AppController
 
     public function history()
     {
-        $pastGames = $this->Games->find('all')->where([
+        $apiKey = $this->request->getQuery('apiKey');
+        $loggedUser = $this->Users->getUserByApiKey($apiKey);
 
-        ])->order([
+        $pastGames = $this->Games->find('all')->where([])->order([
             'id' => 'DESC'
-        ])->limit(100)->toArray();
+        ]);
 
-        foreach($pastGames as $game) {
-            if ($game['complete'] == false) {
-                $game['total_checked'] = "???";
-                $game['ratio'] = "???";
+        if (!empty($loggedUser)) {
+            $pastGames->contain('GamesUsers', function ($q) use ($loggedUser)  {
+                return $q->where(['GamesUsers.user_id' => $loggedUser->id]);
+            });
+        }
+
+        $pastGames = $pastGames->limit(100)->hydrate(false)->toArray();
+
+        foreach($pastGames as $key => $game) {
+            if ($pastGames[$key]['complete'] == false) {
+                $pastGames[$key]['total_checked'] = "???";
+                $pastGames[$key]['ratio'] = "???";
             }
+            if (!empty($pastGames[$key]['games_users'])) {
+                $pastGames[$key]['you_checked_box'] = $pastGames[$key]['games_users'][0]['checked_box'];
+            }
+            unset($pastGames[$key]['games_users']);
         }
 
         $content = $pastGames;

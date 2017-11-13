@@ -21,7 +21,9 @@ A JSON response will be returned in the following format:</p>
     }
 }</pre>
 <h3>Getting game history</h3>
-<p>Make a GET request to: <pre>http://cruelty.brandonfoltz.com/games/history</pre> and receive a JSON response similar to this example:
+<p>Make a GET request to the following URL, noting that the <b>apiKey</b> query parameter is optional:
+<pre>http://cruelty.brandonfoltz.com/games/history?apiKey=someverylongstringwithlettersandnumbers1111</pre>
+You will receive a JSON response similar to this example:
 <pre>
 {
     "content": [
@@ -32,7 +34,8 @@ A JSON response will be returned in the following format:</p>
             "total_plays": 1,
             "total_checked": "???",
             "ratio": "???",
-            "complete": false
+            "complete": false,
+            "you_checked_box": true
         },
         {
             "id": 34,
@@ -41,11 +44,13 @@ A JSON response will be returned in the following format:</p>
             "total_plays": 13,
             "total_checked": 3,
             "ratio": 0.23,
-            "complete": true
+            "complete": true,
+            "you_checked_box": false
         },
         ...
     ]
 }
 </pre>
-The response will include the 100 most recent games data. The first entry is the current game in progress (with <b>total_checked</b> and <b>ratio</b> removed).</p>
+The response will include the 100 most recent games data. The first entry is the current game in progress (with <b>total_checked</b> and <b>ratio</b> removed).
+If you do not supply an <b>apiKey</b> or if you did not participate in a particular game, the <b>you_checked_box</b> field will be omitted on the relevant element.</p>
 

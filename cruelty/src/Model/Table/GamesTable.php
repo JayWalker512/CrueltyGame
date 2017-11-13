@@ -41,8 +41,13 @@ class GamesTable extends Table
         $this->belongsToMany('Users', [
             'foreignKey' => 'game_id',
             'targetForeignKey' => 'user_id',
-            'joinTable' => 'games_users'
+            //'joinTable' => 'games_users'
+            'through' => 'GamesUsers'
         ]);
+        $this->hasMany('GamesUsers', [
+            'foreignKey' => 'game_id'
+        ]);
+
     }
 
     /**
@@ -168,13 +173,13 @@ class GamesTable extends Table
         $this->save($newGame);
         return $newGame;
     }
-    
+
     public function getCurrentGame()
     {
         $currentGame = $this->find('all')->where([
             'complete' => false
         ])->first();
-        
+
         return $currentGame;
     }
 }
