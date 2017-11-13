@@ -166,7 +166,7 @@ class GamesController extends AppController
         $this->setJsonResponse($content);
     }
 
-    public function randomGame()
+    /*public function randomGame()
     {
         $users = $this->Users->find('all');
         foreach ($users as $user) {
@@ -186,7 +186,7 @@ class GamesController extends AppController
     {
         $this->Games->createNewGame();
         $this->redirect(['action' => 'play']);
-    }
+    }*/
 
     /**
      * Index method
