@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Auth\DefaultPasswordHasher;
 
 /**
  * Users Controller
@@ -100,17 +101,26 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => ['Games']
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+        $passwordForm = new \App\Form\PasswordForm();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            if ($passwordForm->validate($this->request->getData())) {
+                $hasher = new DefaultPasswordHasher();
+                if ($hasher->check($this->request->getData('old_password'), $user->password)) {
+                    $this->Flash->error('Could not update your password. Please try again.');
+                    return $this->redirect($this->referer());
+                }
+
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('Your password has been updated.'));
+                    return $this->redirect(['action' => 'edit', $user->id]);
+                }
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $games = $this->Users->Games->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'games'));
+        $this->set('passwordForm', $passwordForm);
+        $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
 
