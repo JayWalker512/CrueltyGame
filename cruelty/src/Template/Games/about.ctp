@@ -16,8 +16,8 @@
     <ul>
         <li>If you're logged in, you can <?= $this->Html->link("edit your account and preferences here.", ['controller' => 'users', 'action' => 'edit', $loggedUser->id]) ?></li>
     </ul>
-    <?php endif; ?>
     <br/>
+    <?php endif; ?>
     <li><b>How can I make a bot to play?</b></li>
     <ul>
         <li>Check out <?= $this->Html->link("the API.", ['controller' => 'users', 'action' => 'api']) ?></li>

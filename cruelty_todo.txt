@@ -21,6 +21,10 @@ Code TODO:
 		- bot api for automated playing [done]
 			- uses api key [done]
 
+	email players for:
+		- account activation
+		- game results
+
 Extra stuff:
 	
 	Donation page with XMR webminer

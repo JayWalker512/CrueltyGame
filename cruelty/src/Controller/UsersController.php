@@ -15,6 +15,12 @@ class UsersController extends AppController
 
     public function isAuthorized($user)
     {
+        //don't allow editing/viewing anyones profile but your own
+        if (in_array($this->request->getParam('action'), ['edit'])) {
+            if ($user['id'] != $this->request->getParam('pass')[0]) {
+                return false;
+            }
+        }
         return true;
     }
 
