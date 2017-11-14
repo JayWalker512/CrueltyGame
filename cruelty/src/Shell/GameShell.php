@@ -52,6 +52,24 @@ class GameShell extends Shell
         }
     }
 
+    public function random()
+    {
+        $usersTable = $this->loadModel('Users');
+        $gamesUsersTable = $this->loadModel('GamesUsers');
+        $users = $usersTable->find('all');
+        foreach ($users as $user) {
+            $gamesUsersTable->insertPlay($user->id, rand(0,1));
+        }
+        $this->out('Inserted random plays for all players.');
+    }
+
+    public function newGame()
+    {
+        $gamesTable = $this->loadModel('Games');
+        $gamesTable->createNewGame();
+        $this->out('Created a new game.');
+    }
+
     /**
      * Display help for this console.
      *

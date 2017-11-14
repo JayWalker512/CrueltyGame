@@ -11,15 +11,15 @@ Pages Needed:
 
 	api documentation
 		- how to use api & example
-		- show api key
+		- show api key [done]
 		- button to reset api key
 
 Code TODO:
 	play game logic
-		- cron job to do calculation and end game
+		- cron job to do calculation and end game [done]
 
-		- bot api for automated playing
-			- uses api key
+		- bot api for automated playing [done]
+			- uses api key [done]
 
 Extra stuff:
 	
