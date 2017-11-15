@@ -48,7 +48,15 @@ endif;
         <tr>
         <?php endif; ?>
             <td><?= $game->start_time ?></td>
-            <td><?= $game->end_time ?></td>
+            <td><?php
+                if ($currentGame['id'] == $game->id) {
+                    $now = new DateTime();
+                    $interval = $now->diff(new DateTime($game->end_time));
+                    echo $game->end_time . ' (' . ($game->end_time > $now ? $interval->format('%i') : 0) . ' minutes)';
+                } else {
+                    echo $game->end_time;
+                }
+            ?></td>
             <td><?= $game->total_plays ?></td>
             <td><?php
                 if (isset($userPlays[$game->id])) {
