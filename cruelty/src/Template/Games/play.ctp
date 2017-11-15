@@ -11,8 +11,8 @@
 
 <?php if ($bCanPlay == true): ?>
 <h2>How To Play</h2>
-<p>If <b>less</b> than 50% of players check the box, those players who checked it win 10 points.</p>
-<p>If <b>more</b> than 50% of players check the box, those players who checked the box lose 10 points!</p>
+<p>If <b>50% or less</b> of players check the box, those players who checked it win 10 points.</p>
+<p>If <b>strictly more than 50%</b> of players check the box, those players who checked the box lose 10 points!</p>
 <br/>
 <p><?= "You are logged in as <b>" . h($loggedUser->username) . "</b> and your current score is <b>" . $loggedUser->score ?></b>.</p>
 <?= $this->Form->create() ?>
@@ -24,7 +24,7 @@
 ]) ?>
 <?= $this->Form->end() ?>
 <?php else: ?>
-<p><?= "You chose to <b>" . ($usersPlay->checked_box ? "CHECK" : "NOT check") . "</b> the box. Wait until the game ends to play again!" ?></p>
+<p><?= "You chose to <b>" . ($userPlays[$currentGame['id']] ? "CHECK" : "NOT check") . "</b> the box. Wait until the game ends to play again!" ?></p>
 
 <?php
 endif;
@@ -50,7 +50,15 @@ endif;
             <td><?= $game->start_time ?></td>
             <td><?= $game->end_time ?></td>
             <td><?= $game->total_plays ?></td>
-            <td><?= "test" ?></td>
+            <td><?php
+                if (isset($userPlays[$game->id])) {
+                    if ($userPlays[$game->id]) {
+                        echo $this->Html->icon('check');
+                    } else {
+                        echo $this->Html->icon('unchecked');
+                    }
+                }
+            ?></td>
             <td><?= ($game->complete == true ? $game->ratio : "???") ?></td>
         </tr>
         <?php endforeach; ?>

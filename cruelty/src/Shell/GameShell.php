@@ -52,6 +52,13 @@ class GameShell extends Shell
         }
     }
 
+    public function forceRun()
+    {
+        $gamesTable = $this->loadModel('Games');
+        $gamesTable->runGame();
+        $this->out("Ran the game.");
+    }
+
     public function random()
     {
         $usersTable = $this->loadModel('Users');

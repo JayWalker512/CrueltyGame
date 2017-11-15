@@ -48,15 +48,21 @@ class GamesController extends AppController
         if (empty($currentGame)) {
             $currentGame = $this->Games->createNewGame();
         }
+        $this->set('currentGame', $currentGame);
 
-        $usersPlay = $this->GamesUsers->find('all')->where([
+        $userPlays = $this->GamesUsers->find('list', [
+            'keyField' => 'game_id',
+            'valueField' => 'checked_box'
+        ])->where([
             'user_id' => $loggedUser['id'],
-            'game_id' => $currentGame->id
-        ])->first();
-        $this->set('usersPlay', $usersPlay);
+            'game_id >= ' => $currentGame['id'] - 10
+        ])->order([
+            'game_id' => 'DESC'
+        ])->limit(10)->toArray();
+        $this->set('userPlays', $userPlays);
 
         $bCanPlay = false;
-        if (empty($usersPlay)) {
+        if (!isset($userPlays[$currentGame['id']])) {
             $bCanPlay = true;
         }
         $this->set('bCanPlay', $bCanPlay);

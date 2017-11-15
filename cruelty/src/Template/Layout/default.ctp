@@ -26,7 +26,7 @@ $cakeDescription = 'Cruelty';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['bootstrap.min.css', 'cruelty.css']) ?>
+    <?= $this->Html->css(['bootstrap.min.css', 'bootstrap-theme.min.css', 'cruelty.css']) ?>
     <?= $this->Html->script(['jquery-1.12.4.min.js', 'bootstrap.min.js']) ?>
 
     <?= $this->fetch('meta') ?>
