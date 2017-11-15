@@ -177,7 +177,8 @@ class UsersTable extends Table
             ->setFrom("admin@brandonfoltz.com", "Cruelty Game")
             ->setSubject('Activate your account.')
             ->setViewVars([
-                'user' => $user
+                'user' => $user,
+                'gameDomain' => Configure::read('GameDomain')
             ]);
 
         $email->addTo($user->email);

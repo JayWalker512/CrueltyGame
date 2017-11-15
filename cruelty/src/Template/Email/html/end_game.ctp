@@ -4,4 +4,4 @@
 
 <!--<h3>You have <?= ($ratio > 0.5 ? "lost" : "been awarded" ) ?> 10 points!</h3>-->
 
-<p>Would you like to <a href="">play again?</a></p>
+<p>Would you like to <a href="<?= $gameDomain ?>">play again?</a></p>

@@ -2,4 +2,4 @@
 
 <p>Your account with username <b><?= h($user->username) ?></b> has been created.</p>
 
-<p>Please <a href="">Click Here To Activate Your Account</a> and start playing Cruelty!</p>
+<p>Please <a href="<? $gameDomain ?>/users/activate/<? $user->api_key ?>">Click Here To Activate Your Account</a> and start playing Cruelty!</p>

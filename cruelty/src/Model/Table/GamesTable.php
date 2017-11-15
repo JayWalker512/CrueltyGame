@@ -172,7 +172,8 @@ class GamesTable extends Table
             ->setFrom("admin@brandonfoltz.com", "Cruelty Game")
             ->setSubject('Cruelty Game Results')
             ->setViewVars([
-                'ratio' => $currentGame->ratio
+                'ratio' => $currentGame->ratio,
+                'gameDomain' => Configure::read('GameDomain')
             ]);
 
         foreach ($currentGame->users as $user) {
