@@ -17,7 +17,7 @@
 A JSON response will be returned in the following format:</p>
 <pre>{
     "content": {
-        "success": 1
+        "success": true
     }
 }</pre>
 <h3>Getting game history</h3>

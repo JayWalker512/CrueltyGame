@@ -110,16 +110,17 @@ class GamesController extends AppController
 
         $loggedUser = $this->Users->getUserByApiKey($apiKey);
 
+        $success = false;
         if (!empty($loggedUser) && $loggedUser->enabled == true) {
             $checkedBox = $this->request->getQuery('c');
             if ($checkedBox == '0') {
-                $this->GamesUsers->insertPlay($loggedUser->id, 0);
+                $success = $this->GamesUsers->insertPlay($loggedUser->id, 0);
             } else {
-                $this->GamesUsers->insertPlay($loggedUser->id, 1);
+                $success = $this->GamesUsers->insertPlay($loggedUser->id, 1);
             }
         }
 
-        $content = ['success' => 1];
+        $content = ['success' => $success];
         $this->setJsonResponse($content);
     }
 
