@@ -1,20 +1,7 @@
-<?php
-/**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
- */
+<h1>Cruelty</h1>
 
-$content = explode("\n", $content);
+<p>The last Cruelty game you played ended with a ratio of <?= $ratio ?>.</p>
 
-foreach ($content as $line) :
-    echo '<p> ' . $line . "</p>\n";
-endforeach;
+<!--<h3>You have <?= ($ratio > 0.5 ? "lost" : "been awarded" ) ?> 10 points!</h3>-->
+
+<p>Would you like to <a href="">play again?</a></p>

@@ -8,6 +8,10 @@ use Cake\Validation\Validator;
 use Cake\ORM\TableRegistry;
 use Cake\I18n\Time;
 
+use Cake\Mailer\Email;
+use Cake\Log\Log;
+use Cake\Network\Exception\SocketException;
+
 /**
  * Games Model
  *
@@ -94,7 +98,7 @@ class GamesTable extends Table
         //get the current game
         $currentGame = $this->find('all')->where([
             'complete' => false
-        ])->first();
+        ])->contain(['Users'])->first();
 
         //get all the plays counts
         $gamesUsersTable = TableRegistry::get('GamesUsers');
@@ -157,9 +161,29 @@ class GamesTable extends Table
             $usersTable->save($user);
         }
 
-
         //create next incomplete game & save
         $this->createNewGame();
+
+        //send notification emails
+        $email = new Email('default');
+
+        $email->setTemplate('end_game', 'default')
+            ->setEmailFormat('html')
+            ->setFrom("admin@brandonfoltz.com", "Cruelty Game")
+            ->setSubject('Cruelty Game Results')
+            ->setViewVars([
+                'ratio' => $currentGame->ratio
+            ]);
+
+        foreach ($currentGame->users as $user) {
+            $email->addBcc($user->email);
+        }
+
+        try {
+            $email->send();
+        } catch (\Cake\Network\Exception\SocketException $e) {
+            Log::write("error", "Couldn't send game result email!");
+        }
     }
 
     public function createNewGame()

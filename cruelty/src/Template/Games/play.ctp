@@ -73,7 +73,7 @@ endif;
     <tbody>
         <?php foreach ($users as $user): ?>
         <tr>
-            <td><?= h($user->username) ?></td>
+            <td><?= ($user->username == $loggedUser->username) ? '<b>' . h($user->username) . '</b>' : h($user->username)?></td>
             <td><?= h($user->score) ?></td>
         </tr>
         <?php endforeach; ?>

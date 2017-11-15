@@ -24,6 +24,7 @@ Code TODO:
 	email players for:
 		- account activation
 		- game results
+		- add email preference
 
 Extra stuff:
 	
