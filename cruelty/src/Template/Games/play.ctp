@@ -34,8 +34,8 @@ endif;
 <h4>Past Games</h4>
 <table class="table">
     <thead>
-        <th>Start Time</th>
-        <th>End Time</th>
+        <th>Start Time (GMT)</th>
+        <th>End Time (GMT)</th>
         <th>Total Plays</th>
         <th>You</th>
         <th>Ratio</th>
@@ -73,7 +73,13 @@ endif;
     <tbody>
         <?php foreach ($users as $user): ?>
         <tr>
-            <td><?= ($user->username == $loggedUser->username) ? '<b>' . h($user->username) . '</b>' : h($user->username)?></td>
+            <td><?php
+                if (isset($loggedUser)) {
+                    echo ($user->username == $loggedUser->username) ? '<b>' . h($user->username) . '</b>' : h($user->username);
+                }  else {
+                    echo h($user->username);
+                }
+            ?></td>
             <td><?= h($user->score) ?></td>
         </tr>
         <?php endforeach; ?>
