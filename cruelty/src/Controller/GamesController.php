@@ -73,8 +73,10 @@ class GamesController extends AppController
         ])->limit(5)->all();
         $this->set('pastGames', $pastGames);
 
-        $leaderBoardUsers = $this->Users->find('all')->order([
-            'score' => 'DESC'
+        $leaderBoardUsers = $this->Users->find('all')->where([
+            'enabled' => true
+        ])->order([
+            'score' => 'DESC',
         ])->limit(10)->all();
         $this->set('users', $leaderBoardUsers);
 

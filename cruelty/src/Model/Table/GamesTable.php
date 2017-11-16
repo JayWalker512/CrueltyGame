@@ -183,6 +183,10 @@ class GamesTable extends Table
             }
         }
 
+        //don't bother emailing if there's nobody to email.
+        if (empty($email->getTo()) && empty($email->getCc()) && empty($email->getBcc())) {
+            return true;
+        }
         try {
             $email->send();
         } catch (\Cake\Network\Exception\SocketException $e) {
