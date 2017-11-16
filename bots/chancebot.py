@@ -7,10 +7,6 @@ apiKey = 'thNnGRqdSqPwyzpKEQCVLUrXoQmjBoQhVw7BTfdJsrpIAtcgFgvsxUSUFMbnWmkWhN7RhQ
 
 r = requests.get(url='http://cruelty.com/games/canPlay?apiKey=' + apiKey)
 
-if (r.json()['content']['canPlay'] == 0):
-	print('Can\'t play again just yet...')
-	exit()
-
 #Decide if we check using a 50/50 strategy.
 randVal = random.randint(0,100)
 check = "0"

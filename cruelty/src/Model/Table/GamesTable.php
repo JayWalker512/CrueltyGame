@@ -239,7 +239,7 @@ class GamesTable extends Table
         $newGame = $this->newEntity();
         $newGame->complete = false;
         $newGame->start_time = Time::now();
-        $newGame->end_time = new Time('now +1 hours');
+        $newGame->end_time = new Time('now +59 minutes');
         $newGame->total_plays = 0;
         $newGame->total_checked = 0;
         $this->save($newGame);
