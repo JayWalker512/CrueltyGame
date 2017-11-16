@@ -18,9 +18,9 @@ if (randVal > 50):
 	check = "1"
 
 #Send the play
-r = requests.get(url='http://cruelty.com/games/botPlay?c=' + check + '&apiKey=' + apiKey)
+r = requests.get(url='http://cruelty.brandonfoltz.com/games/botPlay?c=' + check + '&apiKey=' + apiKey)
 
-if (r.json()['content']['success'] == 1):
+if (r.json()['content']['success'] == "true"):
 	print('Cruelty play submitted successfully. c=' + check)
 else:
 	print('Failed to submit play!')

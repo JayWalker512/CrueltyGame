@@ -17,6 +17,11 @@
         <li>If you're logged in, you can <?= $this->Html->link("edit your account and preferences here.", ['controller' => 'users', 'action' => 'edit', $loggedUser->id]) ?></li>
     </ul>
     <br/>
+    <li><b>How can I log out?</b></li>
+    <ul>
+        <li><?= $this->Html->link("Click here.", ['controller' => 'users', 'action' => 'logout']) ?></li>
+    </ul>
+    <br/>
     <?php endif; ?>
     <li><b>How can I make a bot to play?</b></li>
     <ul>

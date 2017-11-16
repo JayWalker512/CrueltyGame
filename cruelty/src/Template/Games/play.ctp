@@ -67,7 +67,7 @@ endif;
                     }
                 }
             ?></td>
-            <td><?= ($game->complete == true ? $game->ratio : "???") ?></td>
+            <td><?= ($game->complete == true ? (string)((float)($game->ratio) * 100) . "%" : "???") ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
