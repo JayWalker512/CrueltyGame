@@ -11,6 +11,7 @@ use Cake\I18n\Time;
 use Cake\Mailer\Email;
 use Cake\Log\Log;
 use Cake\Network\Exception\SocketException;
+use Cake\Core\Configure;
 
 /**
  * Games Model
