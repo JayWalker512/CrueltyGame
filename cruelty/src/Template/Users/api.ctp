@@ -1,6 +1,6 @@
 <h2>API</h2>
 
-<p>I encourage players to write bots that play this game for them. There is a very simple API to use, via GET requests.</p>
+<p>I encourage players to write bots that play this game for them. There is a very simple API to use via GET requests, and you can see <a href="https://github.com/JayWalker512/CrueltyGame/tree/master/bots">some examples here.</a></p>
 
 <?php if (!empty($apiKey)): ?>
 <p><?= $this->Form->input('apiKey', [
