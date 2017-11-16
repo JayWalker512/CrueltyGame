@@ -138,7 +138,6 @@ class GamesTable extends Table
         $this->save($currentGame);
 
         //get all the users that played this round
-
         $usersTable = TableRegistry::get('Users');
         $usersWhoCheckedThisGameIdArray = $gamesUsersTable->find('list', [
             'valueField' => 'user_id'
@@ -149,6 +148,17 @@ class GamesTable extends Table
         $currentGameCheckedUsers = $usersTable->find('all')->where([
             'id IN' => (!empty($usersWhoCheckedThisGameIdArray) ? $usersWhoCheckedThisGameIdArray : [0])
         ]);
+
+        $usersWhoDidntCheckThisGameIdArray = $gamesUsersTable->find('list', [
+            'valueField' => 'user_id'
+        ])->where([
+            'game_id' => $currentGame->id,
+            'checked_box' => false
+        ])->toArray();
+        $currentGameUncheckedUsers = $usersTable->find('all')->where([
+            'id IN' => (!empty($usersWhoDidntCheckThisGameIdArray) ? $usersWhoDidntCheckThisGameIdArray : [0])
+        ]);
+
 
         //update users scores
         foreach ($currentGameCheckedUsers as $user) {
@@ -165,7 +175,7 @@ class GamesTable extends Table
         //create next incomplete game & save
         $this->createNewGame();
 
-        //send notification emails
+        //send notification emails to everybody that gained/lost points
         $email = new Email('default');
 
         $email->setTemplate('end_game', 'default')
@@ -174,10 +184,40 @@ class GamesTable extends Table
             ->setSubject('Cruelty Game Results')
             ->setViewVars([
                 'ratio' => $currentGame->ratio,
+                'checked' => true,
                 'gameDomain' => Configure::read('GameDomain')
             ]);
 
-        foreach ($currentGame->users as $user) {
+        foreach ($currentGameCheckedUsers as $user) {
+            if ($user->receive_emails && $user->enabled) {
+                $email->addBcc($user->email);
+            }
+        }
+
+        //don't bother emailing if there's nobody to email.
+        if (empty($email->getTo()) && empty($email->getCc()) && empty($email->getBcc())) {
+            return true;
+        }
+        try {
+            $email->send();
+        } catch (\Cake\Network\Exception\SocketException $e) {
+            Log::write("error", "Couldn't send game result email!");
+        }
+
+        //send email to everybody who played but didn't check
+        $email = new Email('default');
+
+        $email->setTemplate('end_game', 'default')
+            ->setEmailFormat('html')
+            ->setFrom("admin@brandonfoltz.com", "Cruelty Game")
+            ->setSubject('Cruelty Game Results')
+            ->setViewVars([
+                'ratio' => $currentGame->ratio,
+                'checked' => false,
+                'gameDomain' => Configure::read('GameDomain')
+            ]);
+
+        foreach ($currentGameUncheckedUsers as $user) {
             if ($user->receive_emails && $user->enabled) {
                 $email->addBcc($user->email);
             }

@@ -36,7 +36,7 @@ endif;
     <thead>
         <th>Start Time (GMT)</th>
         <th>End Time (GMT)</th>
-        <th>Total Plays</th>
+        <th>Total Players</th>
         <th>You</th>
         <th>Ratio</th>
     </thead>
@@ -67,7 +67,7 @@ endif;
                     }
                 }
             ?></td>
-            <td><?= ($game->complete == true ? (string)((float)($game->ratio) * 100) . "%" : "???") ?></td>
+            <td><?= ($game->complete == true ? (string)((float)($game->ratio) * 100.0) . "%" : "???") ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
