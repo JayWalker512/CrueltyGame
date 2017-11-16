@@ -188,22 +188,4 @@ class GamesController extends AppController
         $this->set(compact('games'));
         $this->set('_serialize', ['games']);
     }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Game id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $game = $this->Games->get($id, [
-            'contain' => ['Users']
-        ]);
-
-        $this->set('game', $game);
-        $this->set('_serialize', ['game']);
-    }
-
 }
