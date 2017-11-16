@@ -122,7 +122,7 @@ class GamesTable extends Table
         $totalPlays = $currentGameCheckedCount + $currentGameUncheckedCount;
 
         //If not enough players, extend the end time and bail;
-        if ($totalPlays < 5) {
+        if ($totalPlays < 2) {
             $currentGame->end_time = Time::now()->addHour(1);
             $this->save($currentGame);
             return false;
