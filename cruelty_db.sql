@@ -10,7 +10,9 @@ CREATE TABLE users (
 	activation_string VARCHAR(255),
 	enabled BOOLEAN DEFAULT 0,
 	score INT UNSIGNED DEFAULT 0,
-	api_key VARCHAR(255)
+	api_key VARCHAR(255),
+	receive_emails BOOLEAN,
+	donation INT UNSIGNED DEFAULT 0
 );
 
 CREATE TABLE games (

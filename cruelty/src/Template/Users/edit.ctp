@@ -13,7 +13,19 @@
         <td><?= h($user->score) ?></td>
     </tr>
 </table>
-
+<?= $this->Form->create($user) ?>
+<fieldset>
+    <legend><?= __('Change Preferences') ?></legend>
+    <?php
+        echo $this->Form->control('receive_emails', [
+            'type' => 'checkbox',
+            'label' => 'Email you the results of games that you play?'
+        ]);
+    ?>
+</fieldset>
+<?= $this->Form->button(__('Save')) ?>
+<?= $this->Form->end() ?>
+<br/>
 <?= $this->Form->create($passwordForm) ?>
 <fieldset>
     <legend><?= __('Change Password') ?></legend>

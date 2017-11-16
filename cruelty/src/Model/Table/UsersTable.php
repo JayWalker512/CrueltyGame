@@ -8,6 +8,7 @@ use Cake\Validation\Validator;
 use Cake\Mailer\Email;
 use Cake\Log\Log;
 use Cake\Network\Exception\SocketException;
+use Cake\Core\Configure;
 
 /**
  * Users Model
@@ -89,6 +90,10 @@ class UsersTable extends Table
             ->scalar('api_key')
             ->allowEmpty('api_key');
 
+        $validator
+            ->boolean('receive_emails');
+
+
         return $validator;
     }
 
@@ -104,7 +109,17 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
 
-        //TODO FIXME do not allow changing username or email!
+        $rules->add(function ($entity, $options) {
+            if ($entity->isDirty() && !$entity->isNew()) {
+                if ($entity->isDirty('username') || $entity->isDirty('email')) {
+                    return false;
+                }
+            }
+            return true;
+        }, 'antihax', [
+            'errorField' => 'username',
+            'message' => 'Cannot change username or email.'
+        ]);
 
         return $rules;
     }

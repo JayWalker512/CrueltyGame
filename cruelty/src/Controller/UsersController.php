@@ -104,7 +104,6 @@ class UsersController extends AppController
 
         $passwordForm = new \App\Form\PasswordForm();
         if ($this->request->is(['patch', 'post', 'put'])) {
-
             if ($passwordForm->validate($this->request->getData())) {
                 $hasher = new DefaultPasswordHasher();
                 if ($hasher->check($this->request->getData('old_password'), $user->password)) {
@@ -112,8 +111,9 @@ class UsersController extends AppController
                     return $this->redirect($this->referer());
                 }
 
+                $user = $this->Users->patchEntity($user, $this->request->getData());
                 if ($this->Users->save($user)) {
-                    $this->Flash->success(__('Your password has been updated.'));
+                    $this->Flash->success(__('Your account has been updated.'));
                     return $this->redirect(['action' => 'edit', $user->id]);
                 }
                 $this->Flash->error(__('The user could not be saved. Please, try again.'));
@@ -126,10 +126,9 @@ class UsersController extends AppController
 
     public function activate($activationString) {
         $activationString = trim($activationString);
+
         if (!preg_match('/[^a-zA-Z0-9]+/', $activationString, $matches) && strlen($activationString) == 128) {
-
             $matchedUser = $this->Users->findByActivationString($activationString)->first();
-
 
             if ($matchedUser) {
                 $matchedUser->enabled = true;
@@ -143,6 +142,7 @@ class UsersController extends AppController
                 }
             }
         }
+        $this->Flash->error('Something went wrong...');
         return $this->redirect($this->referer());
     }
 }

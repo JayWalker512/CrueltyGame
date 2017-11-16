@@ -3,7 +3,7 @@ MVP features:
 Pages Needed:
 	login [working]
 
-	change password page
+	change password page [done]
 
 	play game page
 		- checkbox + submit button [working]
@@ -22,9 +22,9 @@ Code TODO:
 			- uses api key [done]
 
 	email players for:
-		- account activation
-		- game results
-		- add email preference
+		- account activation [done]
+		- game results [done]
+		- add email preference [done]
 
 Extra stuff:
 	

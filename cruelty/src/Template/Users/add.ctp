@@ -13,6 +13,11 @@
         ]);
         echo $this->Form->control('email');
         echo $this->Form->control('password');
+        echo $this->Form->control('receive_email', [
+            'label' => 'Email you the results of games that you play?',
+            'type' => 'checkbox',
+            'default' => true
+        ]);
     ?>
 </fieldset>
 <?= $this->Form->button(__('Create')) ?>

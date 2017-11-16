@@ -177,7 +177,9 @@ class GamesTable extends Table
             ]);
 
         foreach ($currentGame->users as $user) {
-            $email->addBcc($user->email);
+            if ($user->receive_emails && $user->enabled) {
+                $email->addBcc($user->email);
+            }
         }
 
         try {

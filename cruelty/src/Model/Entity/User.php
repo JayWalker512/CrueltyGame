@@ -15,6 +15,7 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property bool $enabled
  * @property int $score
  * @property string $api_key
+ * @property bool $receive_emails
  *
  * @property \App\Model\Entity\Game[] $games
  */
@@ -38,7 +39,8 @@ class User extends Entity
         'enabled' => false,
         'score' => false,
         'api_key' => false,
-        'games' => true
+        'games' => true,
+        'receive_emails' => true
     ];
 
     /**
