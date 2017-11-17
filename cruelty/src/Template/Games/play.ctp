@@ -1,5 +1,20 @@
 
 <?php if (empty($loggedUser)): ?>
+<h2>What's this?</h2>
+<p>Cruelty is a game about anticipating the actions of other players. Each round, every player has the option
+    to <i>check</i> a box, or to <i>not check</i> a box. At the end of the round, the ratio of players who
+    checked versus the total number of players who participated is calculated.</p>
+<p>If up to 50% of the players
+    checked the box, those players who checked the box are awarded 10 points. However, if <i>more</i> than
+    50% of the players checked the box, those players who checked the box <i>lose</i> 10 points. Every player
+    can see the outcome of past rounds, but has to make a guess about what to do in the current round. It is
+    similar in spirit to the <a href="https://en.wikipedia.org/wiki/Prisoner%27s_dilemma">prisoners dilemma</a>,
+    or trying to predict the stock market.</p>
+<p>Humans can play this of course, but the real fun comes from creating a strategy and
+    <?= $this->Html->link('writing a bot to play for you', [
+        'controller' => 'games', 'action' => 'api'
+        ]) ?>. That way you can check in from time to time and see if you <i>really can</i>
+    predict the future!</p>
 <h2>To play, <?= $this->Html->link('make an account', [
     'controller' => 'Users',
     'action' => 'add'
@@ -31,7 +46,7 @@ endif;
 endif;
 ?>
 <br/>
-<h4>Past Games</h4>
+<h4>Past Rounds</h4>
 <table class="table">
     <thead>
         <th>Start Time (GMT)</th>
