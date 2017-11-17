@@ -12,7 +12,7 @@
     or trying to predict the stock market.</p>
 <p>Humans can play this of course, but the real fun comes from creating a strategy and
     <?= $this->Html->link('writing a bot to play for you', [
-        'controller' => 'games', 'action' => 'api'
+        'controller' => 'users', 'action' => 'api'
         ]) ?>. That way you can check in from time to time and see if you <i>really can</i>
     predict the future!</p>
 <h2>To play, <?= $this->Html->link('make an account', [
